@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Create Repository</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2><a href="./dashboard.html">Dashboard</a></h2>
+
+      <h2>Create Repository</h2>
+      <form action="create_repository.php" method="post">
+        <div>
+          <label for="repositoryName">Repository Name:</label>
+          <input type="text" id="repositoryName" name="repositoryName" />
+        </div>
+        <br />
+        <div class="form-group">
+          <button type="submit" name="submit" class="create-btn">Create</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
