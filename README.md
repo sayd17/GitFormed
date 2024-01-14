@@ -7,7 +7,7 @@ This repository contains the source code for the MVP (Minimum Viable Product) of
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/sayd17/GitFormed/
+   git clone https://github.com/sayd17/GitFormed.git
    ```
 2. **Download and Install XAMPP**
 
