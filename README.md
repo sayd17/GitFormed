@@ -19,6 +19,9 @@ This repository contains the source code for the MVP (Minimum Viable Product) of
 
 6. **Now run the Project by "localhost/gitformed/dashboard"**
 
+## Database
+![alt text](https://github.com/sayd17/GitFormed/blob/master/dbdiagram.svg)
+
 ## Core Functionalities
 #### Authentication
 - Users can log in to their accounts using email and password.
