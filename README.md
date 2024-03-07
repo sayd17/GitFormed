@@ -2,15 +2,27 @@
 
 This repository contains the source code for the MVP (Minimum Viable Product) of the project, enabling users to perform core functionalities related to repositories and pull requests. Below are instructions on how to set up and run both the backend and frontend components.
 
-## Setup and Installation
+## Installation
+
+Make sure you have environment setup properly. You will need PHP8.1, composer and Node.js.
 
 1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/sayd17/GitFormed.git
    ```
-2. **Install Composer**
 
-3. **Use Vite to setup React environment**
+2. Download the project (or clone using GIT)
+3. Copy `.env.example` into `.env` and configure database credentials
+4. Navigate to the project's root directory using terminal
+5. Run `composer install`
+6. Set the encryption key by executing `php artisan key:generate --ansi`
+7. Run migrations `php artisan migrate --seed`
+8. Start local server by executing `php artisan serve`
+9. Open new terminal and navigate to the `react` folder
+10. Copy `react/.env.example` into `.env` and adjust the `VITE_API_BASE_URL` parameter
+11. Run `npm install`
+12. Run `npm run dev` to start vite server for React
 
 ## Database
 
