@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Reqest\LoginRequest;
-use App\Http\Reqest\SignupRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +17,7 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials)) {
             return response([
                 'message' => 'Provided email address or password is incorrect'
-            ]);
+            ], 422);
         }
 
         $user = Auth::user();
@@ -29,6 +29,7 @@ class AuthController extends Controller
     }
 
     public function signup(SignupRequest $request){
+        
         $data = $request->validated();
         $user = User::create([
             'name' => $data['name'],

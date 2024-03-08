@@ -1,14 +1,16 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
-import axios from "axios";
+import axiosClient from "../axios-client";
+
+const BASE_API_URL = "http://127.0.0.1:8000";
 
 export default function Signup() {
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmationRef = useRef();
-
+  const [errors, setErrors] = useState(null);
   const { setToken, setUser } = useStateContext();
 
   const onSubmit = (ev) => {
@@ -22,8 +24,9 @@ export default function Signup() {
     };
     // console.log(payload);
 
-    axios
-      .post("/signup", payload)
+    // .post("/signup", payload)
+    axiosClient
+      .post(BASE_API_URL + "/api/signup", payload)
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
@@ -31,7 +34,7 @@ export default function Signup() {
       .catch((err) => {
         const response = err.response;
         if (response && response.status === 422) {
-          console.log(response.data.errors);
+          setErrors(response.data.errors);
         }
       });
   };
@@ -41,6 +44,15 @@ export default function Signup() {
       <div className="form">
         <form onSubmit={onSubmit}>
           <h1 className="title">Signup for free</h1>
+
+          {errors && (
+            <div className="alert">
+              {Object.keys(errors).map((key) => (
+                <p key={key}>{errors[key][0]}</p>
+              ))}
+            </div>
+          )}
+
           <input ref={nameRef} type="name" placeholder="Full Name" />
           <input ref={emailRef} type="email" placeholder="Email Address" />
           <input ref={passwordRef} type="password" placeholder="Password" />

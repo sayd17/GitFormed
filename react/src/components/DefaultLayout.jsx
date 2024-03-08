@@ -6,6 +6,8 @@ export default function DefaultLayout() {
   console.log(token);
   // if token not exists
   if (!token) {
+    // debugger;
+
     return <Navigate to="/login" />;
   }
 
