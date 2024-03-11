@@ -25,6 +25,7 @@ export default function Signup() {
     // console.log(payload);
 
     // .post("/signup", payload)
+    // .post("/signup", payload)
     axiosClient
       .post(BASE_API_URL + "/api/signup", payload)
       .then(({ data }) => {
