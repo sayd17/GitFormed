@@ -1,12 +1,21 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axiosClient from "../axios-client";
 
 const BASE_API_URL = "http://127.0.0.1:8000";
 
 export default function DefaultLayout() {
-  const { user, token, notification, setUser, setToken } = useStateContext();
+  const {
+    user,
+    loggedInUser,
+    token,
+    notification,
+    setUser,
+    setToken,
+    setLoggedInUser,
+  } = useStateContext();
+
   console.log(token);
   // if token not exists
   if (!token) {
@@ -21,6 +30,8 @@ export default function DefaultLayout() {
     axiosClient.post("/logout").then(() => {
       setUser({});
       setToken(null);
+      setLoggedInUser(null);
+      localStorage.removeItem("LOGGED_IN_USER");
     });
   };
 
@@ -28,6 +39,12 @@ export default function DefaultLayout() {
     axiosClient.get("/user").then(({ data }) => {
       setUser(data);
     });
+  }, []);
+
+  useEffect(() => {
+    let userInfo = localStorage.getItem("LOGGED_IN_USER");
+    userInfo = JSON.parse(userInfo);
+    setLoggedInUser(userInfo);
   }, []);
 
   return (
@@ -46,7 +63,9 @@ export default function DefaultLayout() {
           </div>
 
           <div>
-            {user.name}
+            {loggedInUser?.username}
+            <br />
+            <small>{loggedInUser?.email}</small>
             {/* <a href="#" onClick={onLogout} className="btn-logout">
               Logout
             </a> */}

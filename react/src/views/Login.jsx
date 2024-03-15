@@ -28,6 +28,7 @@ export default function Login() {
       .then(({ data }) => {
         setUser(data.user);
         setToken(data.token);
+        localStorage.setItem("LOGGED_IN_USER", JSON.stringify(data.user));
       })
       .catch((err) => {
         const response = err.response;

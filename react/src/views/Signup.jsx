@@ -6,7 +6,7 @@ import axiosClient from "../axios-client";
 const BASE_API_URL = "http://127.0.0.1:8000";
 
 export default function Signup() {
-  const nameRef = useRef();
+  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmationRef = useRef();
@@ -17,25 +17,27 @@ export default function Signup() {
     ev.preventDefault();
     // console.log(nameRef.current);
     const payload = {
-      name: nameRef.current.value,
+      username: usernameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
       password_confirmation: passwordConfirmationRef.current.value,
     };
-    // console.log(payload);
+    console.log(payload);
 
     // .post("/signup", payload)
     // .post("/signup", payload)
     axiosClient
       .post(BASE_API_URL + "/api/signup", payload)
       .then(({ data }) => {
+        // console.log(data);
         setUser(data.user);
         setToken(data.token);
       })
       .catch((err) => {
+        // console.log(err);
         const response = err.response;
         if (response && response.status === 422) {
-          setErrors(response.data.errors);
+          // setErrors(response.data.errors);
         }
       });
   };
@@ -54,7 +56,7 @@ export default function Signup() {
             </div>
           )}
 
-          <input ref={nameRef} type="name" placeholder="Full Name" />
+          <input ref={usernameRef} type="name" placeholder="Username" />
           <input ref={emailRef} type="email" placeholder="Email Address" />
           <input ref={passwordRef} type="password" placeholder="Password" />
           <input

@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useStateContext } from "./contexts/ContextProvider.jsx";
+import { cors } from "cors";
+// var cors = require("cors");
+// app.use(cors()); // Use this after the variable declaration
 
 const axiosClient = axios.create({
   baseURL: `http://127.0.0.1:8000/api`,

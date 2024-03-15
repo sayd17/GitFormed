@@ -8,7 +8,7 @@ export default function UserForm() {
   let { id } = useParams();
   const [user, setUser] = useState({
     id: null,
-    name: "",
+    username: "",
     email: "",
     password: "",
     password_confirmation: "",
@@ -21,9 +21,10 @@ export default function UserForm() {
     useEffect(() => {
       setLoading(true);
       axiosClient
-        .get(`/users/${id}`)
+        .get(`/user/${id}`)
         .then(({ data }) => {
           setLoading(false);
+          // console.log(data);
           setUser(data);
         })
         .catch(() => {
@@ -65,7 +66,7 @@ export default function UserForm() {
 
   return (
     <>
-      {user.id && <h1>Update User: {user.name}</h1>}
+      {user.id && <h1>Update User: {user.username}</h1>}
       {!user.id && <h1>New User</h1>}
       <div className="card animated fadeInDown">
         {loading && <div className="text-center">Loading...</div>}
@@ -79,9 +80,9 @@ export default function UserForm() {
         {!loading && (
           <form onSubmit={onSubmit}>
             <input
-              value={user.name}
-              onChange={(ev) => setUser({ ...user, name: ev.target.value })}
-              placeholder="Name"
+              value={user.username}
+              onChange={(ev) => setUser({ ...user, username: ev.target.value })}
+              placeholder="Username"
             />
             <input
               value={user.email}
