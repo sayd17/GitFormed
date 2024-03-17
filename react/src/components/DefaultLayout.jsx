@@ -38,6 +38,8 @@ export default function DefaultLayout() {
   useEffect(() => {
     axiosClient.get("/user").then(({ data }) => {
       setUser(data);
+      console.log(data);
+      // debugger;
     });
   }, []);
 
@@ -53,7 +55,7 @@ export default function DefaultLayout() {
       {/* Sidebar */}
       <aside>
         <Link to="/Repositories">Repositories</Link>
-        {/* <Link to="/users">Users</Link> */}
+        <Link to="/users">Users</Link>
       </aside>
       {/* content */}
       <div className="content">
@@ -63,12 +65,8 @@ export default function DefaultLayout() {
           </div>
 
           <div>
-            {loggedInUser?.username}
-            <br />
-            <small>{loggedInUser?.email}</small>
-            {/* <a href="#" onClick={onLogout} className="btn-logout">
-              Logout
-            </a> */}
+            {user.username}
+            &nbsp; &nbsp;
             <a onClick={onLogout} className="btn-logout" href="#">
               Logout
             </a>
