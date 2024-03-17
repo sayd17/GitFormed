@@ -68,6 +68,9 @@ export default function Signup() {
           <p className="message">
             Already Registered? <Link to="/login">Sign in</Link>
           </p>
+          <p className="message">
+            See repositories as a <Link to="/guestDashboard">Guest</Link>
+          </p>
         </form>
       </div>
     </div>

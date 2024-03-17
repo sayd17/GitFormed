@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 import React from "react";
 
@@ -8,7 +8,7 @@ export default function Users() {
   const [users, setUsers] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { setNotification } = useStateContext();
+  const { setNotification, token } = useStateContext();
 
   useEffect(() => {
     getUsers();

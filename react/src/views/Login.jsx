@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../contexts/ContextProvider";
 import axiosClient from "../axios-client";
 
@@ -9,7 +9,7 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const [errors, setErrors] = useState(null);
-  const { setUser, setToken } = useStateContext();
+  const { setUser, token, setToken } = useStateContext();
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -64,6 +64,9 @@ export default function Login() {
           <button className="btn btn-block">Login</button>
           <p className="message">
             Not Registered? <Link to="/signup">Create an account</Link>
+          </p>
+          <p className="message">
+            Don't have any account? <Link to="/guestDashboard">Guest</Link>
           </p>
         </form>
       </div>

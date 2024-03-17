@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useStateContext } from "./contexts/ContextProvider.jsx";
 import { cors } from "cors";
+import { Navigate } from "react-router-dom";
 // var cors = require("cors");
 // app.use(cors()); // Use this after the variable declaration
 

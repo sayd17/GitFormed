@@ -4,11 +4,15 @@ import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 import React from "react";
 
-export default function Dashboard() {
+export default function Users() {
   const [users, setUsers] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setNotification, token } = useStateContext();
+
+  if (token) {
+    <Navigate to="/login" />;
+  }
 
   useEffect(() => {
     getUsers();

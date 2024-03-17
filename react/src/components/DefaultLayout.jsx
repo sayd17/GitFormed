@@ -16,7 +16,7 @@ export default function DefaultLayout() {
     setLoggedInUser,
   } = useStateContext();
 
-  console.log(token);
+  // console.log(token);
   // if token not exists
   if (!token) {
     // debugger;
@@ -52,8 +52,8 @@ export default function DefaultLayout() {
     <div id="defaultLayout">
       {/* Sidebar */}
       <aside>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/users">Users</Link>
+        <Link to="/Repositories">Repositories</Link>
+        {/* <Link to="/users">Users</Link> */}
       </aside>
       {/* content */}
       <div className="content">
