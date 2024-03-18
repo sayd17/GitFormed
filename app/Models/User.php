@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Watcher;
 use App\Models\Notification;
+use App\Models\Repository;
 use Illuminate\Database\Eloquent\Relations\Hasmany;
 
 class User extends Authenticatable
@@ -54,6 +55,11 @@ class User extends Authenticatable
     public function notifications() : HasMany 
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function repositories() : HasMany 
+    {
+        return $this->hasMany(Repository::class);
     }
 
 }

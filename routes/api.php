@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Api\AuthController;
 use \App\Http\Controllers\Api\UserController;
+use \App\Http\Controllers\Api\RepositoryController;
+use \App\Http\Controllers\Api\GuestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,12 +23,15 @@ Route::middleware('auth:sanctum')->group(function(){
         // dd($request);
         return $request->user(); 
     });
-    Route::apiResource('/users', UserController::class);
+    Route::apiResources([
+        '/users' => UserController::class,
+        '/repositories' => RepositoryController::class,
+
+    ]);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
-Route::post('/repositories', [AuthController::class, 'repositories']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
-// Route::post('/logout', [AuthController::class, 'logout']);
+Route::resource('/guestRepositories', GuestController::class)->only(['index', 'show']);
