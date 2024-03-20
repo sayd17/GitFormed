@@ -7,8 +7,10 @@ import DefaultLayout from "./components/DefaultLayout.jsx";
 import GuestLayout from "./components/GuestLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/UserForm.jsx";
+import RepositoryForm from "./views/RepositoryForm.jsx";
 import GuestDashboard from "./views/GuestDashborad.jsx";
 import Repositories from "./views/Repositories.jsx";
+import MyRepositories from "./views/MyRepositories.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,12 +26,20 @@ const router = createBrowserRouter([
         element: <Repositories />,
       },
       {
+        path: "/myRepositories",
+        element: <MyRepositories />,
+      },
+      {
         path: "/dashboard",
         element: <Dashboard />,
       },
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/repositories/new",
+        element: <RepositoryForm key="repositoryCreate" />,
       },
       {
         path: "/users/new",

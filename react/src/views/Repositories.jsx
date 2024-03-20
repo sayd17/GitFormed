@@ -9,20 +9,43 @@ export default function Repositories() {
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
   const { setNotification, token } = useStateContext();
+  const [order, setOrder] = useState("DESC");
+
+  // const sorting = (col) => {
+  //   if (order === "ASC") {
+  //     setOrder("DESC");
+  //     // .get("/repositories?sort_by=" + col + "&order_by=asc")
+  //     axiosClient
+  //       .get("/repositories?sort_by=asc(" + col + ")")
+  //       .then(({ data }) => {
+  //         console.log(col);
+  //         console.log("asc");
+  //         setRepositories(data.data);
+  //         console.log(repositories);
+  //         setLinks(data.meta.links);
+  //       })
+  //       .catch(() => {});
+  //   }
+
+  //   if (order === "DESC") {
+  //     setOrder("ASC");
+  //     axiosClient
+  //       .get("/repositories?sort_by=" + col + "&order_by=desc")
+  //       .then(({ data }) => {
+  //         // console.log(col);
+  //         console.log("desc");
+
+  //         setRepositories(data.data);
+  //         // console.log(repositories);
+  //         setLinks(data.meta.links);
+  //       })
+  //       .catch(() => {});
+  //   }
+  // };
 
   useEffect(() => {
     getRepositories();
   }, []);
-
-  const onDeleteClick = (repositories) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) {
-      return;
-    }
-    axiosClient.delete(`/repositories/${repositorie.id}`).then(() => {
-      setNotification("Repository was successfully deleted");
-      getRepositories();
-    });
-  };
 
   const getRepositories = (url) => {
     setLoading(true);
@@ -31,7 +54,7 @@ export default function Repositories() {
       .then(({ data }) => {
         setLoading(false);
         //debugger;
-        console.log(data.data);
+        // console.log(data);
         setRepositories(data.data);
         setLinks(data.meta.links);
       })
@@ -58,9 +81,15 @@ export default function Repositories() {
         <table>
           <thead>
             <tr>
-              <th>username/repository_name</th>
-              <th>number of watchers</th>
-              <th>date and time of creation</th>
+              <th onClick={() => sorting("repo_name")}>
+                username/repository_name
+              </th>
+              <th onClick={() => sorting("no_of_watchers")}>
+                number of watchers
+              </th>
+              <th onClick={() => sorting("created_at")}>
+                date and time of creation
+              </th>
             </tr>
           </thead>
           {loading && (

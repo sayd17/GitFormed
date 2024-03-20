@@ -22,7 +22,7 @@ class WatcherFactory extends Factory
             'repo_name' => Repository::factory(),
             'owner' => Repository::factory(),
             'username' => User::factory(),
-
+            'deleted_at' => now(),
         ];
     }
 }
