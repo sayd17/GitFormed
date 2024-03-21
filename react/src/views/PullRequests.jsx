@@ -7,6 +7,7 @@ export default function PullRequest() {
   const navigate = useNavigate();
   const { user, setNotification } = useStateContext();
   let { owner, repo_name } = useParams();
+  const [pullRequests, setPullRequests] = useState([]);
 
   const [pullRequest, setPullRequest] = useState({
     owner: owner,
@@ -15,6 +16,27 @@ export default function PullRequest() {
   });
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+    getPullRequests();
+  }, []);
+
+  const getPullRequests = (url) => {
+    setLoading(true);
+    axiosClient
+      .get(url ?? "/getpullrequests")
+      .then(({ data }) => {
+        setLoading(false);
+        // debugger;
+        console.log(data.data);
+        setPullRequests(data.data);
+        setLinks(data.meta.links);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -49,7 +71,7 @@ export default function PullRequest() {
         {!loading && (
           <form onSubmit={onSubmit}>
             <input
-              value={pullRequest.pullRequestname}
+              value={pullRequest.title}
               onChange={(ev) =>
                 setPullRequest({
                   ...pullRequest,
@@ -62,6 +84,41 @@ export default function PullRequest() {
             <button className="btn">Create</button>
           </form>
         )}
+
+        {/* Fetch Pull Requests  */}
+        {
+          <div className="card animated fadeInDown">
+            <table>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Title</th>
+                  <th>Time of creation</th>
+                </tr>
+              </thead>
+              {loading && (
+                <tbody>
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      Loading...
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+              {!loading && (
+                <tbody>
+                  {pullRequests?.map((u) => (
+                    <tr key={u.id}>
+                      <td>{u.id}</td>
+                      <td>{u.title}</td>
+                      <td>{u.created_at}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          </div>
+        }
       </div>
     </>
   );

@@ -8,13 +8,13 @@ use App\Interfaces\PullRequestRepositoryInterface;
 
 class PullRequestRepository implements PullRequestRepositoryInterface
 {
-    // public function index()
-    // {
-    //     return PullRequestResource::collection(
+    public function index()
+    {
+        return PullRequestResource::collection(
             
-    //         PullRequest::query()->orderBy('id', 'asc')->paginate(10)
-    //     );
-    // }
+            PullRequest::query()->orderBy('id', 'asc')->paginate(10)
+        );
+    }
 
     /**
      * Store a newly created resource in storage.

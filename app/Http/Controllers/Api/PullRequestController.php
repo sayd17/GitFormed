@@ -15,6 +15,10 @@ class PullRequestController extends Controller
         $this->pullRequest = $pullRequest;
     }
 
+    public function index(){
+        return $this->pullRequest->index();
+    }
+    
     public function store(StorePullRequestRequest $request){
         return $this->pullRequest->store($request);
     }

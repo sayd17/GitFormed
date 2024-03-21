@@ -14,16 +14,6 @@ export default function Repositories() {
     getRepositories();
   }, []);
 
-  const onDeleteClick = (repositories) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) {
-      return;
-    }
-    axiosClient.delete(`/repositories/${repositorie.id}`).then(() => {
-      setNotification("Repository was successfully deleted");
-      getRepositories();
-    });
-  };
-
   const getRepositories = (url) => {
     setLoading(true);
     axiosClient
@@ -90,12 +80,7 @@ export default function Repositories() {
                       Pull Requests
                     </Link>
                     &nbsp;
-                    <button
-                      className="btn-edit"
-                      onClick={(ev) => onDeleteClick(u)}
-                    >
-                      Watch
-                    </button>
+                    <button className="btn-edit">Watch</button>
                   </td>
                 </tr>
               ))}
