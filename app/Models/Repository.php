@@ -14,5 +14,11 @@ class Repository extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'owner',
+        'repo_name',
+        'no_of_watchers',
+    ];
 }
 

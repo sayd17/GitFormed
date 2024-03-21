@@ -54,8 +54,11 @@ export default function DefaultLayout() {
     <div id="defaultLayout">
       {/* Sidebar */}
       <aside>
-        <Link to="/Repositories">Repositories</Link>
         <Link to="/users">Users</Link>
+        <Link to="/Repositories">Repositories</Link>
+        <Link to="/myRepositories">My Repositories</Link>
+        <Link to="/myRepositories">Watching</Link>
+        <Link to="/myRepositories">Notification</Link>
       </aside>
       {/* content */}
       <div className="content">

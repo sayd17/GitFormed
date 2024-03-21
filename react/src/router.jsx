@@ -9,6 +9,8 @@ import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/UserForm.jsx";
 import GuestDashboard from "./views/GuestDashboard.jsx";
 import Repositories from "./views/Repositories.jsx";
+import RepositoryForm from "./views/RepositoryForm.jsx";
+import PullRequests from "./views/PullRequests.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,16 +22,24 @@ const router = createBrowserRouter([
         element: <Navigate to="/repositories" />,
       },
       {
-        path: "/repositories",
-        element: <Repositories />,
-      },
-      {
         path: "/dashboard",
         element: <Dashboard />,
       },
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/repositories",
+        element: <Repositories />,
+      },
+      {
+        path: "/pullrequests/:owner/:repo_name",
+        element: <PullRequests />,
+      },
+      {
+        path: "/repositories/new",
+        element: <RepositoryForm key="repositoryCreate" />,
       },
       {
         path: "/users/new",

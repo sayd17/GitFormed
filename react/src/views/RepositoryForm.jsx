@@ -3,15 +3,14 @@ import { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 
-export default function PullRequest() {
+export default function RepositoryForm() {
   const navigate = useNavigate();
   const { user, setNotification } = useStateContext();
-  let { owner, repo_name } = useParams();
 
-  const [pullRequest, setPullRequest] = useState({
-    owner: owner,
-    repo_name: repo_name,
-    title: "",
+  const [repository, setRepository] = useState({
+    owner: user.username,
+    repo_name: "",
+    no_of_watchers: 1,
   });
   const [errors, setErrors] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,9 +19,9 @@ export default function PullRequest() {
     ev.preventDefault();
 
     axiosClient
-      .post("/pullrequests", pullRequest)
+      .post("/repositories", repository)
       .then(() => {
-        setNotification("PullRequest was successfully created");
+        setNotification("Repository was successfully created");
         navigate("/repositories");
       })
       .catch((err) => {
@@ -35,7 +34,7 @@ export default function PullRequest() {
 
   return (
     <>
-      <h1> Pull Request </h1>
+      <h1> New Repository </h1>
       <div className="card animated fadeInDown">
         {loading && <div className="text-center">Loading...</div>}
         {errors && (
@@ -49,17 +48,17 @@ export default function PullRequest() {
         {!loading && (
           <form onSubmit={onSubmit}>
             <input
-              value={pullRequest.pullRequestname}
+              value={repository.repositoryname}
               onChange={(ev) =>
-                setPullRequest({
-                  ...pullRequest,
-                  title: ev.target.value,
+                setRepository({
+                  ...repository,
+                  repo_name: ev.target.value,
                 })
               }
-              placeholder="PR title"
+              placeholder="Repository Name"
             />
 
-            <button className="btn">Create</button>
+            <button className="btn">Save</button>
           </form>
         )}
       </div>

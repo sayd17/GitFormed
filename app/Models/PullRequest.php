@@ -17,4 +17,10 @@ class PullRequest extends Model
     {
         return $this->belongsTo(Repository::class);
     }
+
+    protected $fillable = [
+        'title', 
+        'owner', 
+        'repo_name',
+    ];
 }

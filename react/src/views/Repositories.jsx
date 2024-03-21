@@ -61,6 +61,7 @@ export default function Repositories() {
               <th>username/repository_name</th>
               <th>number of watchers</th>
               <th>date and time of creation</th>
+              <th>Actions</th>
             </tr>
           </thead>
           {loading && (
@@ -81,6 +82,21 @@ export default function Repositories() {
                   </td>
                   <td>{u.no_of_watchers}</td>
                   <td>{u.created_at}</td>
+                  <td>
+                    <Link
+                      className="btn-edit"
+                      to={`/pullrequests/${u.owner}/${u.repo_name}`}
+                    >
+                      Pull Requests
+                    </Link>
+                    &nbsp;
+                    <button
+                      className="btn-edit"
+                      onClick={(ev) => onDeleteClick(u)}
+                    >
+                      Watch
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

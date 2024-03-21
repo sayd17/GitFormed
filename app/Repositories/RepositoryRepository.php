@@ -23,7 +23,6 @@ class RepositoryRepository implements RepositoryRepositoryInterface
     public function store(StoreRepositoryRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
         $repository = Repository::create($data);
         return response(new RepositoryResource($repository), 201); // created new resource on the server
     }

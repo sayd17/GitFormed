@@ -6,6 +6,7 @@ use \App\Http\Controllers\Api\AuthController;
 use \App\Http\Controllers\Api\UserController;
 use \App\Http\Controllers\Api\RepositoryController;
 use \App\Http\Controllers\Api\GuestController;
+use App\Http\Controllers\Api\PullRequestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-
+Route::post('/pullrequests', [PullRequestController::class, 'store']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/guestRepositories', [RepositoryController::class, 'guest']);
