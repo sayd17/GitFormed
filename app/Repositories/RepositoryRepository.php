@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\RepositoryResource;
 use App\Models\Repository;
+use App\Models\User;
 
 class RepositoryRepository implements RepositoryRepositoryInterface
 {
@@ -14,6 +15,17 @@ class RepositoryRepository implements RepositoryRepositoryInterface
         return RepositoryResource::collection(
             
             Repository::query()->orderBy('id', 'asc')->paginate(10)
+        );
+    }
+    
+    public function getMyRepo()
+    {
+        
+        // dd(request()->all());
+
+        return RepositoryResource::collection(
+            
+            Repository::orderBy('id', 'asc')->paginate(10)
         );
     }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateRepositoryRequest;
 use App\Models\Repository;
 use App\Http\Resources\RepositoryResource;
 use App\Interfaces\RepositoryRepositoryInterface;
+use App\Models\User;
 
 class RepositoryController extends Controller
 {
@@ -21,6 +22,16 @@ class RepositoryController extends Controller
     {
         return $this->repositoryRepository->index();
     }
+
+
+
+    public function getMyRepo(){
+        // dd('alsdfkj');
+        // $owner = request('username');
+        
+        return $this->repositoryRepository->getMyRepo();
+    }
+
 
     public function guest(){
         return $this->repositoryRepository->index();
@@ -42,7 +53,7 @@ class RepositoryController extends Controller
         return $this->repositoryRepository->show($repository);
     }
 
-    /**
+    /** 
      * Update the specified resource in storage.
      */
     public function update(UpdateRepositoryRequest $request, Repository $repository)

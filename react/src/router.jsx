@@ -11,6 +11,9 @@ import GuestDashboard from "./views/GuestDashboard.jsx";
 import Repositories from "./views/Repositories.jsx";
 import RepositoryForm from "./views/RepositoryForm.jsx";
 import PullRequests from "./views/PullRequests.jsx";
+import MyRepositories from "./views/MyRepositories.jsx";
+import Watcher from "./views/Watchers.jsx";
+import Notifications from "./views/Notifications.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,18 @@ const router = createBrowserRouter([
       {
         path: "/repositories",
         element: <Repositories />,
+      },
+      {
+        path: "/mywatch",
+        element: <Watcher />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "/myrepositories",
+        element: <MyRepositories />,
       },
       {
         path: "/pullrequests/:owner/:repo_name",

@@ -19,9 +19,12 @@ class WatcherFactory extends Factory
     public function definition(): array
     {
         return [
-            'repo_name' => Repository::factory(),
-            'owner' => Repository::factory(),
-            'username' => User::factory(),
+            'repo_name' => fake()->name(),
+            'owner' => fake()->name(),
+            'username' => fake()->name(),
+            // 'repo_name' => Repository::factory(),
+            // 'owner' => Repository::factory(),
+            // 'username' => User::factory(),
 
         ];
     }

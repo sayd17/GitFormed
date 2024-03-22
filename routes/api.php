@@ -7,6 +7,8 @@ use \App\Http\Controllers\Api\UserController;
 use \App\Http\Controllers\Api\RepositoryController;
 use \App\Http\Controllers\Api\GuestController;
 use App\Http\Controllers\Api\PullRequestController;
+use App\Http\Controllers\Api\WatcherController;
+use App\Http\Controllers\Api\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,11 +29,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::apiResources([
         '/users' => UserController::class,
         '/repositories' => RepositoryController::class,
-
     ]);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+Route::get('/notifications', [NotificationController::class, 'index']);
+Route::get('/mywatch', [WatcherController::class, 'index']);
+Route::get('/myrepositories', [RepositoryController::class, 'getMyRepo']);
 Route::get('/getpullrequests', [PullRequestController::class, 'index']);
 Route::post('/pullrequests', [PullRequestController::class, 'store']);
 Route::post('/signup', [AuthController::class, 'signup']);

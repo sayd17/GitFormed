@@ -45,7 +45,7 @@ export default function PullRequest() {
       .post("/pullrequests", pullRequest)
       .then(() => {
         setNotification("PullRequest was successfully created");
-        navigate("/repositories");
+        navigate(`/pullrequests/${owner}/${repo_name}`);
       })
       .catch((err) => {
         const response = err.response;
@@ -119,6 +119,22 @@ export default function PullRequest() {
             </table>
           </div>
         }
+        {links?.map((link) =>
+          link.active === "false" ? (
+            <button
+              disabled
+              className="btn-edit"
+              onClick={() => getPullRequests(link.url)}
+              dangerouslySetInnerHTML={{ __html: link?.label }}
+            ></button>
+          ) : (
+            <button
+              className="btn-edit"
+              onClick={() => getPullRequests(link.url)}
+              dangerouslySetInnerHTML={{ __html: link?.label }}
+            ></button>
+          )
+        )}
       </div>
     </>
   );

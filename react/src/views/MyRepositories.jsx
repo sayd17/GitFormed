@@ -4,27 +4,25 @@ import { Link, Navigate } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider.jsx";
 import React from "react";
 
-export default function Repositories() {
-  const [repositories, setRepositories] = useState([]);
+export default function MyRepositories() {
+  const [myRepositories, setMyRepositories] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { setNotification, token } = useStateContext();
+  const { setNotification, token, user } = useStateContext();
 
   useEffect(() => {
-    getRepositories();
+    getMyRepositories();
   }, []);
 
-  const watching = () => {};
-
-  const getRepositories = (url) => {
+  const getMyRepositories = (url) => {
     setLoading(true);
     axiosClient
-      .get(url ?? "/repositories")
+      .get(url ?? "/myrepositories")
       .then(({ data }) => {
         setLoading(false);
         // debugger;
         console.log(data.data);
-        setRepositories(data.data);
+        setMyRepositories(data.data);
         setLinks(data.meta.links);
       })
       .catch(() => {
@@ -34,18 +32,6 @@ export default function Repositories() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <h1>Repositories</h1>
-        <Link className="btn-add" to="/repositories/new">
-          Create Repository
-        </Link>
-      </div>
       <div className="card animated fadeInDown">
         <table>
           <thead>
@@ -67,7 +53,7 @@ export default function Repositories() {
           )}
           {!loading && (
             <tbody>
-              {repositories?.map((u) => (
+              {myRepositories?.map((u) => (
                 <tr key={u.id}>
                   <td>
                     {u.owner}/{u.repo_name}
@@ -81,10 +67,6 @@ export default function Repositories() {
                     >
                       Pull Requests
                     </Link>
-                    &nbsp;
-                    <button className="btn-edit" onClick={watching}>
-                      Watch
-                    </button>
                   </td>
                 </tr>
               ))}
@@ -98,13 +80,13 @@ export default function Repositories() {
           <button
             disabled
             className="btn-edit"
-            onClick={() => getRepositories(link.url)}
+            onClick={() => getMyRepositories(link.url)}
             dangerouslySetInnerHTML={{ __html: link?.label }}
           ></button>
         ) : (
           <button
             className="btn-edit"
-            onClick={() => getRepositories(link.url)}
+            onClick={() => getMyRepositories(link.url)}
             dangerouslySetInnerHTML={{ __html: link?.label }}
           ></button>
         )
