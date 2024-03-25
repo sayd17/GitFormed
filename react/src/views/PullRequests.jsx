@@ -53,7 +53,7 @@ export default function PullRequest() {
       .then(({ data }) => {
         setLoading(false);
         // debugger;
-        console.log(data.data);
+        // console.log(data.data);
         setPullRequests(data.data);
         setLinks(data.meta.links);
       })
@@ -68,6 +68,7 @@ export default function PullRequest() {
     axiosClient
       .post("/pullrequests", pullRequest)
       .then(() => {
+        pullRequest.title = "";
         setNotification("PullRequest was successfully created");
         navigate(`/pullrequests/${owner}/${repo_name}`);
       })

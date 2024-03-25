@@ -23,7 +23,7 @@ export default function Watchers() {
       .then(({ data }) => {
         setLoading(false);
         // debugger;
-        console.log(data.data);
+        // console.log(data.data);
         setWatchers(data.data);
         setLinks(data.meta.links);
       })
