@@ -43,3 +43,9 @@ Route::post('/pullrequests', [PullRequestController::class, 'store']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/guestRepositories', [RepositoryController::class, 'guest']);
+
+// Repo sorting
+
+Route::get('/sortRepoByOwner', [RepositoryController::class, 'sortRepoByOwner']);
+Route::get('/sortRepoByWatchers', [RepositoryController::class, 'sortRepoByWatchers']);
+Route::get('/sortRepoByLatest', [RepositoryController::class, 'sortRepoByLatest']);

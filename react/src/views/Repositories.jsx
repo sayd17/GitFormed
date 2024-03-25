@@ -26,7 +26,6 @@ export default function Repositories() {
       .post("/watching", payload)
       .then(({ data }) => {
         console.log(data);
-        console.log("watch successful");
         setNotification("Watch Successful");
       })
       .catch((err) => {
@@ -38,6 +37,55 @@ export default function Repositories() {
       });
   };
 
+  const sorting = (col) => {
+    if (col == "owner") {
+      // sort by owner
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByOwner")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else if (col == "repo_name") {
+      // sort by repo_name
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByWatchers")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          // console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else if (col == "created_at") {
+      // sort by created_at
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByLatest")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          // console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
+  };
+
   const getRepositories = (url) => {
     setLoading(true);
     axiosClient
@@ -45,7 +93,7 @@ export default function Repositories() {
       .then(({ data }) => {
         setLoading(false);
         // debugger;
-        console.log(data.data);
+        // console.log(data.data);
         setRepositories(data.data);
         setLinks(data.meta.links);
       })
@@ -72,9 +120,13 @@ export default function Repositories() {
         <table>
           <thead>
             <tr>
-              <th>username/repository_name</th>
-              <th>number of watchers</th>
-              <th>date and time of creation</th>
+              <th onClick={() => sorting("owner")}>username/repository_name</th>
+              <th onClick={() => sorting("no_of_watchers")}>
+                number of watchers
+              </th>
+              <th onClick={() => sorting("created_at")}>
+                date and time of creation
+              </th>
               <th>Actions</th>
             </tr>
           </thead>

@@ -23,6 +23,21 @@ class RepositoryController extends Controller
         return $this->repositoryRepository->index();
     }
 
+    public function sortRepoByLatest()
+    {
+        return $this->repositoryRepository->sortRepoByLatest();
+    }
+
+    public function sortRepoByWatchers()
+    {
+        return $this->repositoryRepository->sortRepoByWatchers();
+    }
+
+    public function sortRepoByOwner()
+    {
+        return $this->repositoryRepository->sortRepoByOwner();
+    }
+
 
 
     public function getMyRepo(){

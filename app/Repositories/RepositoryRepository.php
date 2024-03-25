@@ -12,9 +12,34 @@ class RepositoryRepository implements RepositoryRepositoryInterface
 {
     public function index()
     {
+       
         return RepositoryResource::collection(
             
             Repository::query()->orderBy('id', 'asc')->paginate(10)
+        );
+    }
+    public function sortRepoByOwner()
+    {
+       
+        return RepositoryResource::collection(
+            
+            Repository::query()->orderBy('owner', 'asc')->paginate(10)
+        );
+    }
+    public function sortRepoByLatest()
+    {
+       
+        return RepositoryResource::collection(
+            
+            Repository::query()->orderBy('created_at', 'asc')->paginate(10)
+        );
+    }
+    public function sortRepoByWatchers()
+    {
+       
+        return RepositoryResource::collection(
+            
+            Repository::query()->orderBy('no_of_watchers', 'asc')->paginate(10)
         );
     }
     

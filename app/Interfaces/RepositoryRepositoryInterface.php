@@ -8,6 +8,9 @@ use App\Models\User;
 Interface RepositoryRepositoryInterface 
 {
     public function index();
+    public function sortRepoByLatest();
+    public function sortRepoByWatchers();
+    public function sortRepoByOwner();
     public function getMyRepo();
     public function store(StoreRepositoryRequest $request);
     public function show(Repository $repository);
