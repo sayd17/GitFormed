@@ -13,6 +13,12 @@ class Notification extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'username',
+        'owner',
+        'repo_name',
+    ];
+
     public function user(): BelongsTo 
     {
         return $this->belongsTo(User::class);

@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 Route::get('/notifications', [NotificationController::class, 'index']);
+Route::post('/notifications', [NotificationController::class, 'store']);
+Route::post('/watching', [WatcherController::class, 'store']);
 Route::get('/mywatch', [WatcherController::class, 'index']);
 Route::get('/myrepositories', [RepositoryController::class, 'getMyRepo']);
 Route::get('/getpullrequests', [PullRequestController::class, 'index']);

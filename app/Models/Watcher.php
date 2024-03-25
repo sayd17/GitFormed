@@ -17,4 +17,11 @@ class Watcher extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'username',
+        'owner',
+        'repo_name',
+    ];
+
 }

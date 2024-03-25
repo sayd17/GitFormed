@@ -8,13 +8,35 @@ export default function Repositories() {
   const [repositories, setRepositories] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { setNotification, token } = useStateContext();
+  const { user, setNotification, token } = useStateContext();
 
   useEffect(() => {
     getRepositories();
   }, []);
 
-  const watching = () => {};
+  const watching = (owner, repo_name) => {
+    const payload = {
+      repo_name: repo_name,
+      owner: owner,
+      username: user.username,
+    };
+    console.log(payload);
+    // debugger;
+    axiosClient
+      .post("/watching", payload)
+      .then(({ data }) => {
+        console.log(data);
+        console.log("watch successful");
+        setNotification("Watch Successful");
+      })
+      .catch((err) => {
+        // console.log(err);
+        const response = err.response;
+        if (response && response.status === 422) {
+          // setErrors(response.data.errors);
+        }
+      });
+  };
 
   const getRepositories = (url) => {
     setLoading(true);
@@ -82,7 +104,10 @@ export default function Repositories() {
                       Pull Requests
                     </Link>
                     &nbsp;
-                    <button className="btn-edit" onClick={watching}>
+                    <button
+                      className="btn-edit"
+                      onClick={() => watching(u.owner, u.repo_name)}
+                    >
                       Watch
                     </button>
                   </td>

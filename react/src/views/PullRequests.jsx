@@ -18,6 +18,30 @@ export default function PullRequest() {
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
 
+  function notify() {
+    const payload = {
+      username: owner,
+      owner: owner,
+      repo_name: repo_name,
+    };
+
+    console.log(payload);
+
+    axiosClient
+      .post("/notifications", payload)
+      .then(({ data }) => {
+        console.log(data);
+        setNotification("Notified all watchers");
+      })
+      .catch((err) => {
+        // console.log(err);
+        const response = err.response;
+        if (response && response.status === 422) {
+          // setErrors(response.data.errors);
+        }
+      });
+  }
+
   useEffect(() => {
     getPullRequests();
   }, []);
@@ -81,7 +105,9 @@ export default function PullRequest() {
               placeholder="PR title"
             />
 
-            <button className="btn">Create</button>
+            <button onClick={() => notify()} className="btn">
+              Create
+            </button>
           </form>
         )}
 
