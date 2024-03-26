@@ -8,44 +8,83 @@ export default function Repositories() {
   const [repositories, setRepositories] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { setNotification, token } = useStateContext();
-  const [order, setOrder] = useState("DESC");
-
-  // const sorting = (col) => {
-  //   if (order === "ASC") {
-  //     setOrder("DESC");
-  //     // .get("/repositories?sort_by=" + col + "&order_by=asc")
-  //     axiosClient
-  //       .get("/repositories?sort_by=asc(" + col + ")")
-  //       .then(({ data }) => {
-  //         console.log(col);
-  //         console.log("asc");
-  //         setRepositories(data.data);
-  //         console.log(repositories);
-  //         setLinks(data.meta.links);
-  //       })
-  //       .catch(() => {});
-  //   }
-
-  //   if (order === "DESC") {
-  //     setOrder("ASC");
-  //     axiosClient
-  //       .get("/repositories?sort_by=" + col + "&order_by=desc")
-  //       .then(({ data }) => {
-  //         // console.log(col);
-  //         console.log("desc");
-
-  //         setRepositories(data.data);
-  //         // console.log(repositories);
-  //         setLinks(data.meta.links);
-  //       })
-  //       .catch(() => {});
-  //   }
-  // };
+  const { user, setNotification, token } = useStateContext();
 
   useEffect(() => {
     getRepositories();
   }, []);
+
+  const watching = (owner, repo_name) => {
+    const payload = {
+      repo_name: repo_name,
+      owner: owner,
+      username: user.username,
+    };
+    console.log(payload);
+    // debugger;
+    axiosClient
+      .post("/watching", payload)
+      .then(({ data }) => {
+        console.log(data);
+        setNotification("Watch Successful");
+      })
+      .catch((err) => {
+        // console.log(err);
+        const response = err.response;
+        if (response && response.status === 422) {
+          // setErrors(response.data.errors);
+        }
+      });
+  };
+
+  const sorting = (col) => {
+    if (col == "owner") {
+      // sort by owner
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByOwner")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else if (col == "no_of_watchers") {
+      // sort by repo_name
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByWatchers")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          // console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else if (col == "created_at") {
+      // sort by created_at
+      setLoading(true);
+      axiosClient
+        .get("/sortRepoByLatest")
+        .then(({ data }) => {
+          setLoading(false);
+          // debugger;
+          // console.log(data.data);
+          setRepositories(data.data);
+          setLinks(data.meta.links);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    }
+  };
 
   const getRepositories = (url) => {
     setLoading(true);
@@ -53,8 +92,8 @@ export default function Repositories() {
       .get(url ?? "/repositories")
       .then(({ data }) => {
         setLoading(false);
-        //debugger;
-        // console.log(data);
+        // debugger;
+        // console.log(data.data);
         setRepositories(data.data);
         setLinks(data.meta.links);
       })
@@ -81,15 +120,14 @@ export default function Repositories() {
         <table>
           <thead>
             <tr>
-              <th onClick={() => sorting("repo_name")}>
-                username/repository_name
-              </th>
+              <th onClick={() => sorting("owner")}>username/repository_name</th>
               <th onClick={() => sorting("no_of_watchers")}>
                 number of watchers
               </th>
               <th onClick={() => sorting("created_at")}>
                 date and time of creation
               </th>
+              <th>Actions</th>
             </tr>
           </thead>
           {loading && (
@@ -104,12 +142,27 @@ export default function Repositories() {
           {!loading && (
             <tbody>
               {repositories?.map((u) => (
-                <tr key={u.id}>
+                <tr>
                   <td>
                     {u.owner}/{u.repo_name}
                   </td>
-                  <td>{u.no_of_watchers}</td>
-                  <td>{u.created_at}</td>
+                  <td key={u.no_of_watchers}>{u.no_of_watchers}</td>
+                  <td key={u.created_at}>{u.created_at}</td>
+                  <td>
+                    <Link
+                      className="btn-edit"
+                      to={`/pullrequests/${u.owner}/${u.repo_name}`}
+                    >
+                      Pull Requests
+                    </Link>
+                    &nbsp;
+                    <button
+                      className="btn-edit"
+                      onClick={() => watching(u.owner, u.repo_name)}
+                    >
+                      Watch
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

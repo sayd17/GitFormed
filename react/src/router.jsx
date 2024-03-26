@@ -7,10 +7,13 @@ import DefaultLayout from "./components/DefaultLayout.jsx";
 import GuestLayout from "./components/GuestLayout.jsx";
 import Dashboard from "./views/Dashboard.jsx";
 import UserForm from "./views/UserForm.jsx";
-import RepositoryForm from "./views/RepositoryForm.jsx";
-import GuestDashboard from "./views/GuestDashborad.jsx";
+import GuestDashboard from "./views/GuestDashboard.jsx";
 import Repositories from "./views/Repositories.jsx";
+import RepositoryForm from "./views/RepositoryForm.jsx";
+import PullRequests from "./views/PullRequests.jsx";
 import MyRepositories from "./views/MyRepositories.jsx";
+import Watcher from "./views/Watchers.jsx";
+import Notifications from "./views/Notifications.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,20 +25,32 @@ const router = createBrowserRouter([
         element: <Navigate to="/repositories" />,
       },
       {
-        path: "/repositories",
-        element: <Repositories />,
-      },
-      {
-        path: "/myRepositories",
-        element: <MyRepositories />,
-      },
-      {
         path: "/dashboard",
         element: <Dashboard />,
       },
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/repositories",
+        element: <Repositories />,
+      },
+      {
+        path: "/mywatch",
+        element: <Watcher />,
+      },
+      {
+        path: "/notifications",
+        element: <Notifications />,
+      },
+      {
+        path: "/myrepositories",
+        element: <MyRepositories />,
+      },
+      {
+        path: "/pullrequests/:owner/:repo_name",
+        element: <PullRequests />,
       },
       {
         path: "/repositories/new",

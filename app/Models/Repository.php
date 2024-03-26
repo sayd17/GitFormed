@@ -10,16 +10,15 @@ use App\Models\User;
 class Repository extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'owner',
-        'repo_name',
-        'no_of_watchers'
-    ];
-
     public function users(): BelongsTo 
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'owner',
+        'repo_name',
+        'no_of_watchers',
+    ];
 }
 

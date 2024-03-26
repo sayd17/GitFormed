@@ -6,13 +6,9 @@ use \App\Http\Controllers\Api\AuthController;
 use \App\Http\Controllers\Api\UserController;
 use \App\Http\Controllers\Api\RepositoryController;
 use \App\Http\Controllers\Api\GuestController;
-use \App\Http\Controllers\Api\MyRepositoryController;
-use \App\Http\Controllers\Api\WatcherController;
-use \App\Http\Controllers\Api\PullRequestController;
-use \App\Models\User;
-use \App\Models\Watcher;
-use \App\Http\Controllers\Api\NotificationController;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\PullRequestController;
+use App\Http\Controllers\Api\WatcherController;
+use App\Http\Controllers\Api\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,30 +23,29 @@ use App\Http\Controllers\Controller;
 Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/user', function (Request $request) {
-        // dd($request->all());
+        // dd($request);
         return $request->user(); 
     });
-    Route::apiResource('/users', UserController::class);
+    Route::apiResources([
+        '/users' => UserController::class,
+        '/repositories' => RepositoryController::class,
+    ]);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::apiResources([
-    '/myrepositories' => MyRepositoryController::class,
-    '/repositories' => RepositoryController::class,
-    '/watchers' => WatcherController::class,
-    '/pullrequests' => PullRequestController::class,
-    '/notifications' => NotificationController::class,
-]);
-
+Route::get('/notifications', [NotificationController::class, 'index']);
+Route::post('/notifications', [NotificationController::class, 'store']);
+Route::post('/watching', [WatcherController::class, 'store']);
+Route::get('/mywatch', [WatcherController::class, 'index']);
+Route::get('/myrepositories', [RepositoryController::class, 'getMyRepo']);
+Route::get('/getpullrequests', [PullRequestController::class, 'index']);
+Route::post('/pullrequests', [PullRequestController::class, 'store']);
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::resource('/guestRepositories', GuestController::class)->only(['index', 'show']);
+Route::get('/guestRepositories', [RepositoryController::class, 'guest']);
 
-Route::get('/soft-delete', [UserController::class, 'softDelete']);
+// Repo sorting
 
-
-    // Route::get('/soft-delete', function(){
-//     $user = User::onlyTrashed()->get();
-
-//     return $user;
-// });
+Route::get('/sortRepoByOwner', [RepositoryController::class, 'sortRepoByOwner']);
+Route::get('/sortRepoByWatchers', [RepositoryController::class, 'sortRepoByWatchers']);
+Route::get('/sortRepoByLatest', [RepositoryController::class, 'sortRepoByLatest']);

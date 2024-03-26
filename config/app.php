@@ -163,11 +163,8 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\NotificationServiceProvider::class,
         App\Providers\PullRequestServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
-        App\Providers\WatcherServiceProvider::class,
-        App\Providers\UserServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

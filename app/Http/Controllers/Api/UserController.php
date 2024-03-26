@@ -8,46 +8,29 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 // use App\Http\Resources\UserResorce;
 use App\Http\Resources\UserResource;
-use App\Interfaces\UserRepositoryInterface;
 
 class UserController extends Controller
 {
-    // private $userRepository;
-
-    // public function __construct(UserRepositoryInterface $userRepository){
-    //     $this->$userRepository = $userRepository;
-    // }
-
-    private $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {   
-        
-        $this->userRepository = $userRepository;
-        
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return $this->userRepository->index();
+        return UserResource::collection(
+            
+            User::query()->orderBy('id', 'asc')->paginate(10)
+        );
     }
-
-    public function softDelete(){
-        return $this->userRepository->softDelete();
-    }
-
-    // soft-delete', function(){
-    //     $user = User::onlyTrashed()->get();
-    
-    //     return $user;
-    // });
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreUserRequest $request)
     {
-        return $this->userRepository->store($request);
+        $data = $request->validated();
+        $data['password'] = bcrypt($data['password']);
+        $user = User::create($data);
+        return response(new UserResource($user), 201); // created new resource on the server
     }
 
     /**
@@ -55,15 +38,22 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->userRepository->show($user);
-   }
+        return new UserResource($user);
+    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-       return $this->userRepository->update($request, $user);
+        $data = $request->validated();
+        if(isset($data['password'])){
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        $user->update($data);
+
+        return new UserResource($user);
     }
 
     /**
@@ -71,6 +61,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        return $this->userRepository->destroy($user);
+        $user->delete();
+
+        return response("Successful", 204);
     }
 }

@@ -21,11 +21,10 @@ class RepositoryFactory extends Factory
     {
         $collection = collect([1]);
         $rand = $collection->random();
-        $num = 1;
         return [
             'owner' => fake()->name(),
             'repo_name' => fake()->name(),
-            'no_of_watchers' =>  $num
+            'no_of_watchers' =>  $rand
         ];
 
         // return [

@@ -32,7 +32,7 @@ export default function Users() {
       .then(({ data }) => {
         setLoading(false);
         //debugger;
-        // console.log(data.data);
+        console.log(data.data);
         setUsers(data.data);
         setLinks(data.meta.links);
       })

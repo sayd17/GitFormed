@@ -16,7 +16,7 @@ class Notification extends Model
     protected $fillable = [
         'username',
         'owner',
-        'repo_name'
+        'repo_name',
     ];
 
     public function user(): BelongsTo 

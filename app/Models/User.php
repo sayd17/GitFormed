@@ -11,12 +11,10 @@ use App\Models\Watcher;
 use App\Models\Notification;
 use App\Models\Repository;
 use Illuminate\Database\Eloquent\Relations\Hasmany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
